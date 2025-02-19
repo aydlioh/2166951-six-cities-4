@@ -1,5 +1,11 @@
 import { Amenity, City, HousingType, Offer } from '../../shared/types/offer.js';
 
+const isCity = (value: unknown): value is City =>
+  typeof value === 'string' && value in City;
+
+const isHousingType = (value: unknown): value is HousingType =>
+  typeof value === 'string' && value in HousingType;
+
 export class OfferParser {
   public static parseRow(row: string[]): Offer {
     OfferParser.validateRow(row);
@@ -33,17 +39,13 @@ export class OfferParser {
       title,
       description,
       postDate: new Date(postDate),
-      city: Object.values(City).includes(city as City)
-        ? (city as City)
-        : City.Paris,
+      city: isCity(city) ? city : City.Paris,
       previewPath,
       imagePaths: imagePaths.split(';'),
       isPremium: isPremium === 'true',
       isFavorite: isFavorite === 'true',
       rating: Number(rating),
-      type: Object.values(HousingType).includes(type as HousingType)
-        ? (type as HousingType)
-        : HousingType.Apartment,
+      type: isHousingType(type) ? type : HousingType.Apartment,
       rooms: Number(rooms),
       guests: Number(guests),
       price: Number(price),

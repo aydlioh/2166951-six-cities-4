@@ -1,6 +1,6 @@
-import { ICommand, Command } from './index.js';
 import { TSVFileReader } from '../../shared/libs/index.js';
 import { OfferParser } from '../utils/index.js';
+import { ICommand, Command } from './index.js';
 
 export class ImportCommand implements ICommand {
   public getName(): string {
