@@ -1,25 +1,40 @@
-import { readFileSync } from 'node:fs';
+import EventEmitter from 'node:events';
+import { createReadStream } from 'node:fs';
 import { FileReader } from './file-reader.interface.js';
 
-export class TSVFileReader implements FileReader {
-  private rawData: string = '';
+const CHUNK_SIZE = 16 * 1024; // 16KB
 
-  constructor(private readonly fileName: string) {}
-
-  public read(): TSVFileReader {
-    this.rawData = readFileSync(this.fileName, { encoding: 'utf-8' });
-    return this;
+export class TSVFileReader extends EventEmitter implements FileReader {
+  constructor(private readonly fileName: string) {
+    super();
   }
 
-  public toArray(): string[][] {
-    if (!this.rawData) {
-      throw new Error('File was not read');
+  public async read(): Promise<void> {
+    const stream = createReadStream(this.fileName, {
+      highWaterMark: CHUNK_SIZE,
+      encoding: 'utf-8',
+    });
+
+    let remainingData = '';
+    let nextLinePosition = -1;
+    let importedRowCount = 0;
+
+    for await (const chunk of stream) {
+      remainingData += chunk.toString();
+      nextLinePosition = remainingData.indexOf('\n');
+
+      while (nextLinePosition >= 0) {
+        const row = remainingData.slice(0, nextLinePosition + 1);
+
+        nextLinePosition++;
+        importedRowCount++;
+        remainingData = remainingData.slice(nextLinePosition);
+        nextLinePosition = remainingData.indexOf('\n');
+
+        this.emit('line', row);
+      }
     }
 
-    return this.rawData
-      .split('\n')
-      .map((row) => row.trim())
-      .filter(Boolean)
-      .map((line) => line.split('\t'));
+    this.emit('end', importedRowCount);
   }
 }

@@ -5,6 +5,7 @@ import {
   HelpCommand,
   ImportCommand,
   VersionCommand,
+  GenerateCommand,
 } from './cli/index.js';
 
 const bootstrap = () => {
@@ -12,6 +13,7 @@ const bootstrap = () => {
     new HelpCommand(),
     new VersionCommand(),
     new ImportCommand(),
+    new GenerateCommand(),
   ]);
 
   cli.processCommand(process.argv);

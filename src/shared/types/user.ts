@@ -10,3 +10,5 @@ export type User = {
   password: string;
   type: UserType;
 };
+
+export type UserInfo = Pick<User, 'userName' | 'email' | 'avatarPath'>;

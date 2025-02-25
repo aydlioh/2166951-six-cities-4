@@ -1,3 +1,5 @@
+import { UserInfo } from './user.js';
+
 export enum City {
   Paris = 'Paris',
   Cologne = 'Cologne',
@@ -44,7 +46,7 @@ export type Offer = {
   guests: number;
   price: number;
   amenities: Amenity[];
-  author: string;
+  author: UserInfo;
   commentsCount: number;
   coordinates: Coordinates;
 };
