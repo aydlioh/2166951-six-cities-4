@@ -1,6 +1,6 @@
-import { ICommand, Command } from './index.js';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { ICommand, Command } from './index.js';
 
 type PackageJSONConfig = {
   version: string;
