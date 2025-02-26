@@ -13,7 +13,7 @@ const isCity = (value: unknown): value is City =>
 const isHousingType = (value: unknown): value is HousingType =>
   typeof value === 'string' && value in HousingType;
 
-export const createOffer = (offerData: string): Offer => {
+export const parseOffer = (offerData: string): Offer => {
   const [
     title,
     description,
