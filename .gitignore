@@ -11,3 +11,6 @@ coverage
 *.log
 
 *.tsv
+
+*.env*
+!*.env.example

@@ -1,5 +1,5 @@
 import { TSVFileReader } from '../../shared/libs/file-reader/index.js';
-import { createOffer, getErrorMessage } from '../../shared/helpers/index.js';
+import { parseOffer, getErrorMessage } from '../../shared/helpers/index.js';
 import { ICommand, Command } from './index.js';
 
 export class ImportCommand implements ICommand {
@@ -23,7 +23,7 @@ export class ImportCommand implements ICommand {
   }
 
   private onImportedLine(line: string) {
-    const offer = createOffer(line);
+    const offer = parseOffer(line);
     console.info(offer);
   }
 
