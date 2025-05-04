@@ -55,16 +55,17 @@
       "Джон Смит"
     ],
     "emails": [
-      "snow@pisem.local",
-      "president@dka.local",
-      "fish@big.local",
-      "test@pisem.local",
-      "freedom@pisem.local",
-      "rolan@pochta.local",
-      "author@mir.local",
-      "test@lost.loca",
-      "kujo-fan@story.local"
+      "snow@pisem.ru",
+      "president@dka.com",
+      "fish@big.org",
+      "test@pisem.ru",
+      "freedom@pisem.ru",
+      "rolan@pochta.ru",
+      "author@mir.ru",
+      "test@lost.ru",
+      "kujo-fan@story.ru"
     ],
+    "userType": ["base", "pro"],
     "avatarImages": [
       "user.jpg",
       "photo.jpg",

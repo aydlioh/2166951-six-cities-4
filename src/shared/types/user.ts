@@ -4,11 +4,8 @@ export enum UserType {
 }
 
 export type User = {
-  userName: string;
+  name: string;
   email: string;
-  avatarPath?: string;
-  password: string;
+  avatarPath: string;
   type: UserType;
 };
-
-export type UserInfo = Pick<User, 'userName' | 'email' | 'avatarPath'>;

@@ -1,4 +1,4 @@
-import { UserInfo } from './user.js';
+import { User } from './user.js';
 
 export enum City {
   Paris = 'Paris',
@@ -46,7 +46,7 @@ export type Offer = {
   guests: number;
   price: number;
   amenities: Amenity[];
-  author: UserInfo;
+  author: User;
   commentsCount: number;
   coordinates: Coordinates;
 };
