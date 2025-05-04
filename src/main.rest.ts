@@ -1,27 +1,17 @@
 import 'reflect-metadata';
-import { Component, DIContainer } from './shared/di/index.js';
-import { RestApplication } from './rest/index.js';
-import { RestConfig } from './shared/libs/config/index.js';
-import { PinoLogger } from './shared/libs/logger/index.js';
+import { Container } from 'inversify';
+import { Component } from './shared/di/index.js';
+import { RestApplication, createRestApplicationModule } from './rest/index.js';
+import { createUserModule } from './shared/modules/user/index.js';
+import { createOfferModule } from './shared/modules/offer/index.js';
 
 const bootstrap = async () => {
-  const diContainer = new DIContainer().registerDependencies([
-    {
-      id: Component.RestApplication,
-      dependency: RestApplication,
-      singleton: true,
-    },
-    {
-      id: Component.Config,
-      dependency: RestConfig,
-      singleton: true,
-    },
-    {
-      id: Component.Logger,
-      dependency: PinoLogger,
-      singleton: true,
-    },
-  ]);
+  const diContainer = new Container();
+  diContainer.load(
+    createRestApplicationModule(),
+    createUserModule(),
+    createOfferModule()
+  );
 
   const app = diContainer.get<RestApplication>(Component.RestApplication);
   await app.init();

@@ -4,7 +4,8 @@ import {
   Coordinates,
   HousingType,
   Offer,
-  UserInfo,
+  User,
+  UserType,
 } from '../types/index.js';
 
 const isCity = (value: unknown): value is City =>
@@ -12,6 +13,9 @@ const isCity = (value: unknown): value is City =>
 
 const isHousingType = (value: unknown): value is HousingType =>
   typeof value === 'string' && value in HousingType;
+
+const isUserType = (value: unknown): value is UserType =>
+  typeof value === 'string' && value in UserType;
 
 export const parseOffer = (offerData: string): Offer => {
   const [
@@ -31,8 +35,9 @@ export const parseOffer = (offerData: string): Offer => {
     amenities,
     commentsCount,
     rawCoordinates,
-    userName,
+    name,
     email,
+    userType,
     avatarPath,
   ] = offerData.replace('\n', '').split('\t');
 
@@ -41,10 +46,11 @@ export const parseOffer = (offerData: string): Offer => {
     longitude: Number(rawCoordinates.split(';')[1]),
   };
 
-  const author: UserInfo = {
-    userName,
+  const author: User = {
+    name,
     email,
     avatarPath,
+    type: isUserType(userType) ? userType : UserType.Base,
   };
 
   return {
