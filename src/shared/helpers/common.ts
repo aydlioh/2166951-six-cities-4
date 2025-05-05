@@ -5,7 +5,7 @@ export const generateRandomValue = (
 ) => +(Math.random() * (max - min) + min).toFixed(numAfterDigit);
 
 export const getRandomItems = <T>(items: T[]): T[] => {
-  const startPosition = generateRandomValue(1, items.length - 1);
+  const startPosition = generateRandomValue(0, items.length - 1);
   const endPosition =
     startPosition + generateRandomValue(startPosition, items.length);
   return items.slice(startPosition, endPosition);

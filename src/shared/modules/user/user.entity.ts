@@ -1,22 +1,14 @@
-import {
-  defaultClasses,
-  getModelForClass,
-  modelOptions,
-  prop,
-} from '@typegoose/typegoose';
+import { getModelForClass, modelOptions, prop } from '@typegoose/typegoose';
 import { User, UserType } from '../../types/user.js';
 import { createSHA256 } from '../../helpers/hash.js';
-
-// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
-export interface UserEntity extends defaultClasses.Base {}
 
 @modelOptions({
   schemaOptions: {
     collection: 'users',
+    timestamps: true,
   },
 })
-// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
-export class UserEntity extends defaultClasses.TimeStamps implements User {
+export class UserEntity implements User {
   @prop({
     type: String,
     match: [/^([\w-\\.]+@([\w-]+\.)+[\w-]{2,4})?$/, 'Email is incorrect'],
@@ -38,8 +30,6 @@ export class UserEntity extends defaultClasses.TimeStamps implements User {
   public type: UserType;
 
   constructor({ email, name, avatarPath, type }: User) {
-    super();
-
     this.email = email;
     this.name = name;
     this.avatarPath = avatarPath;

@@ -6,7 +6,8 @@ import {
 } from '../../../types/offer.js';
 import { User } from '../../../types/user.js';
 
-export class CreateOfferDto {
+export class OfferResponseDto {
+  public id: string;
   public title: string;
   public description: string;
   public postDate: Date;
@@ -14,6 +15,7 @@ export class CreateOfferDto {
   public previewPath: string;
   public imagePaths: string[];
   public isPremium: boolean;
+  public isFavorite: boolean;
   public rating: number;
   public type: HousingType;
   public rooms: number;
@@ -21,5 +23,6 @@ export class CreateOfferDto {
   public price: number;
   public amenities: Amenity[];
   public owner: User;
+  public commentsCount: number;
   public coordinates: Coordinates;
 }

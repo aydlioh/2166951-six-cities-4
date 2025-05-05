@@ -23,6 +23,8 @@ import {
   UserService,
   UserModel,
 } from '../../shared/modules/user/index.js';
+import { FavoriteModel } from '../../shared/modules/favorite/favorite.entity.js';
+import { CommentModel } from '../../shared/modules/comment/comment.entity.js';
 
 export class ImportCommand implements ICommand {
   private userService: UserService;
@@ -33,7 +35,12 @@ export class ImportCommand implements ICommand {
 
   constructor() {
     this.logger = new ConsoleLogger();
-    this.offerService = new DefaultOfferService(this.logger, OfferModel);
+    this.offerService = new DefaultOfferService(
+      this.logger,
+      OfferModel,
+      FavoriteModel,
+      CommentModel
+    );
     this.userService = new DefaultUserService(this.logger, UserModel);
     this.db = new MongoDatabaseClient(this.logger);
   }
@@ -70,8 +77,11 @@ export class ImportCommand implements ICommand {
     try {
       await fileReader.read();
     } catch (error) {
-      console.error(`Can't import data from file: ${fileName}`);
-      console.error(getErrorMessage(error));
+      this.logger.error(
+        `Can't import data from file: ${fileName}`,
+        error as Error
+      );
+      this.logger.error(getErrorMessage(error), error as Error);
     }
   }
 
@@ -82,19 +92,19 @@ export class ImportCommand implements ICommand {
   };
 
   private onCompleteImport = (count: number) => {
-    console.info(`${count} rows imported.`);
+    this.logger.info(`${count} rows imported.`);
     this.db.disconnect();
   };
 
   private async saveOffer(offer: Offer) {
-    const user = await this.userService.findOrCreate(
+    const owner = await this.userService.findOrCreate(
       {
-        ...offer.author,
+        ...offer.owner,
         password: DEFAULT_USER_PASSWORD,
       },
       this.salt
     );
 
-    await this.offerService.create({ ...offer, author: user });
+    await this.offerService.create({ ...offer, owner });
   }
 }
