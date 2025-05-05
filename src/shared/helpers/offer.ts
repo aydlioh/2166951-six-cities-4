@@ -9,13 +9,15 @@ import {
 } from '../types/index.js';
 
 const isCity = (value: unknown): value is City =>
-  typeof value === 'string' && value in City;
+  typeof value === 'string' && Object.values(City).includes(value as City);
 
 const isHousingType = (value: unknown): value is HousingType =>
-  typeof value === 'string' && value in HousingType;
+  typeof value === 'string' &&
+  Object.values(HousingType).includes(value as HousingType);
 
 const isUserType = (value: unknown): value is UserType =>
-  typeof value === 'string' && value in UserType;
+  typeof value === 'string' &&
+  Object.values(UserType).includes(value as UserType);
 
 export const parseOffer = (offerData: string): Offer => {
   const [

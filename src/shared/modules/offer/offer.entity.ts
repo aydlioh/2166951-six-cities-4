@@ -1,5 +1,4 @@
 import {
-  defaultClasses,
   getModelForClass,
   modelOptions,
   prop,
@@ -21,16 +20,13 @@ class Coordinates implements CoordinatesType {
   public longitude!: number;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
-export interface OfferEntity extends defaultClasses.Base {}
-
 @modelOptions({
   schemaOptions: {
     collection: 'offers',
+    timestamps: true,
   },
 })
-// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
-export class OfferEntity extends defaultClasses.TimeStamps {
+export class OfferEntity {
   @prop({ type: String, required: true, trim: true })
   public title: string;
 
