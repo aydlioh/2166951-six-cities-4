@@ -46,7 +46,7 @@ export const parseOffer = (offerData: string): Offer => {
     longitude: Number(rawCoordinates.split(';')[1]),
   };
 
-  const author: User = {
+  const owner: User = {
     name,
     email,
     avatarPath,
@@ -68,7 +68,7 @@ export const parseOffer = (offerData: string): Offer => {
     guests: Number(guests),
     price: Number(price),
     amenities: amenities.split(';') as Amenity[],
-    author,
+    owner,
     commentsCount: Number(commentsCount),
     coordinates,
   };

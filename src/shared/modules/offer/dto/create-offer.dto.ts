@@ -22,7 +22,7 @@ export class CreateOfferDto implements Offer {
   public guests: number;
   public price: number;
   public amenities: Amenity[];
-  public author: User;
+  public owner: User;
   public commentsCount: number;
   public coordinates: Coordinates;
 }
