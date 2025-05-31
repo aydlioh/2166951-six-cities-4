@@ -16,11 +16,13 @@
     "compile": "tsc -p tsconfig.json",
     "clean": "rimraf dist",
     "ts": "ts-node",
-    "mock:server": "json-server ./mocks/mock-server-data.json --port 3123"
+    "mock:server": "json-server ./mocks/mock-server-data.json --port 3123",
+    "docker:up:dev": "docker compose -f .\\docker-compose.dev.yml up -d"
   },
   "devDependencies": {
     "@types/convict": "^6.1.6",
     "@types/convict-format-with-validator": "^6.0.5",
+    "@types/express": "^5.0.2",
     "@types/node": "18.17.17",
     "@typescript-eslint/eslint-plugin": "6.7.0",
     "@typescript-eslint/parser": "6.7.0",
@@ -42,11 +44,15 @@
   "dependencies": {
     "@typegoose/typegoose": "^12.15.0",
     "chalk": "^5.4.1",
+    "class-transformer": "^0.5.1",
     "convict": "^6.2.4",
     "convict-format-with-validator": "^6.2.0",
     "dayjs": "^1.11.13",
     "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "express-async-handler": "^1.2.0",
     "got": "^14.4.6",
+    "http-status-codes": "^2.3.0",
     "inversify": "^7.2.0",
     "mongoose": "^8.14.1",
     "pino": "^9.6.0",

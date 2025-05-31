@@ -4,21 +4,9 @@ import {
   prop,
   Ref,
 } from '@typegoose/typegoose';
-import {
-  Amenity,
-  City,
-  HousingType,
-  Coordinates as CoordinatesType,
-} from '../../types/offer.js';
-import { UserEntity } from '../user/user.entity.js';
-
-class Coordinates implements CoordinatesType {
-  @prop({ required: true, type: Number })
-  public latitude!: number;
-
-  @prop({ required: true, type: Number })
-  public longitude!: number;
-}
+import { Amenity, City, HousingType } from '../../../types/offer.js';
+import { UserEntity } from '../../user/entities/user.entity.js';
+import { Coordinates } from './coordinates.entity.js';
 
 @modelOptions({
   schemaOptions: {
@@ -48,8 +36,8 @@ export class OfferEntity {
   @prop({ type: Boolean, required: true })
   public isPremium: boolean;
 
-  @prop({ type: Boolean, required: true })
-  public isFavorite: boolean;
+  @prop({ type: Boolean })
+  public isFavorite?: boolean;
 
   @prop({ type: Number, required: true })
   public rating: number;

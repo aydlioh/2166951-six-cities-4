@@ -2,9 +2,9 @@ import { inject, injectable } from 'inversify';
 import { DocumentType, types } from '@typegoose/typegoose';
 import { Logger } from '../../libs/logger/index.js';
 import { Component } from '../../di/index.js';
-import { OfferService } from './offer-service.interface.js';
+import { OfferService } from './types/offer-service.interface.js';
 import { City } from '../../types/offer.js';
-import { OfferEntity } from './offer.entity.js';
+import { OfferEntity } from './entities/offer.entity.js';
 import { CreateOfferDto } from './dto/create-offer.dto.js';
 import { UpdateOfferDto } from './dto/update-offer.dto.js';
 import {
@@ -12,8 +12,8 @@ import {
   DEFAULT_PREMIUM_OFFER_COUNT,
   DEFAULT_SORT_TYPE,
 } from './offer.constant.js';
-import { CommentEntity } from '../comment/comment.entity.js';
-import { FavoriteEntity } from '../favorite/favorite.entity.js';
+import { CommentEntity } from '../comment/entities/comment.entity.js';
+import { FavoriteEntity } from '../favorite/entities/favorite.entity.js';
 
 @injectable()
 export class DefaultOfferService implements OfferService {

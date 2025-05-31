@@ -1,2 +1,2 @@
-export * from './favorite.entity.js';
+export * from './entities/favorite.entity.js';
 export * from './favorite.module.js';
