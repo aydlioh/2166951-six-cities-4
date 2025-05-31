@@ -1,8 +1,8 @@
 import { DocumentType, types } from '@typegoose/typegoose';
 import { inject, injectable } from 'inversify';
-import { CommentService } from './comment-service.interface.js';
+import { CommentService } from './types/comment-service.interface.js';
 import { Component } from '../../di/component.js';
-import { CommentEntity } from './comment.entity.js';
+import { CommentEntity } from './entities/comment.entity.js';
 import { CreateCommentDto } from './dto/create-comment.dto.js';
 import {
   DEFAULT_COMMENTS_COUNT,

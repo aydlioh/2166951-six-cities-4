@@ -4,6 +4,10 @@ import { Logger, PinoLogger } from '../shared/libs/logger/index.js';
 import { Config, RestConfig, RestSchema } from '../shared/libs/config/index.js';
 import { RestApplication } from './rest.application.js';
 import {
+  AppExceptionFilter,
+  ExceptionFilter,
+} from '../shared/libs/rest/index.js';
+import {
   DatabaseClient,
   MongoDatabaseClient,
 } from '../shared/libs/database-client/index.js';
@@ -22,5 +26,9 @@ export const createRestApplicationModule = () =>
     restModule
       .bind<DatabaseClient>(Component.DatabaseClient)
       .to(MongoDatabaseClient)
+      .inSingletonScope();
+    restModule
+      .bind<ExceptionFilter>(Component.ExceptionFilter)
+      .to(AppExceptionFilter)
       .inSingletonScope();
   });

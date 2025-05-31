@@ -4,8 +4,8 @@ import {
   prop,
   Ref,
 } from '@typegoose/typegoose';
-import { UserEntity } from '../user/user.entity.js';
-import { OfferEntity } from '../offer/offer.entity.js';
+import { UserEntity } from '../../user/entities/user.entity.js';
+import { OfferEntity } from '../../offer/entities/offer.entity.js';
 
 @modelOptions({
   schemaOptions: {

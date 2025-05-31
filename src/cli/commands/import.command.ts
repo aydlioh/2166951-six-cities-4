@@ -23,8 +23,8 @@ import {
   UserService,
   UserModel,
 } from '../../shared/modules/user/index.js';
-import { FavoriteModel } from '../../shared/modules/favorite/favorite.entity.js';
-import { CommentModel } from '../../shared/modules/comment/comment.entity.js';
+import { FavoriteModel } from '../../shared/modules/favorite/entities/favorite.entity.js';
+import { CommentModel } from '../../shared/modules/comment/entities/comment.entity.js';
 
 export class ImportCommand implements ICommand {
   private userService: UserService;
@@ -105,6 +105,6 @@ export class ImportCommand implements ICommand {
       this.salt
     );
 
-    await this.offerService.create({ ...offer, owner });
+    await this.offerService.create({ ...offer, owner: owner.id });
   }
 }

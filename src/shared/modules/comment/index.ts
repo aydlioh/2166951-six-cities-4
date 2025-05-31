@@ -1,4 +1,4 @@
-export * from './comment-service.interface.js';
-export * from './comment.entity.js';
+export * from './types/comment-service.interface.js';
+export * from './entities/comment.entity.js';
 export * from './default-comment.service.js';
 export * from './comment.module.js';

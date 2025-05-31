@@ -1,6 +1,6 @@
 import { getModelForClass, modelOptions, prop } from '@typegoose/typegoose';
-import { User, UserType } from '../../types/user.js';
-import { createSHA256 } from '../../helpers/hash.js';
+import { User, UserType } from '../../../types/user.js';
+import { createSHA256 } from '../../../helpers/hash.js';
 
 @modelOptions({
   schemaOptions: {
