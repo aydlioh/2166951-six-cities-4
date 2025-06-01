@@ -53,7 +53,10 @@ export class DefaultOfferService implements OfferService {
     offerId: string,
     userId?: string
   ): Promise<types.DocumentType<OfferEntity> | null> {
-    const offer = await this.offerModel.findById(offerId).exec();
+    const offer = await this.offerModel
+      .findById(offerId)
+      .populate('owner')
+      .exec();
 
     if (!offer) {
       return null;
