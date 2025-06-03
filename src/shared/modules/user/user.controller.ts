@@ -7,9 +7,12 @@ import { Component } from '../../di/component.js';
 import { RestSchema } from '../../libs/config/rest.schema.js';
 import {
   BaseController,
+  DocumentExistsMiddleware,
   HttpError,
   HttpMethod,
+  UploadFileMiddleware,
   ValidateDtoMiddleware,
+  ValidateObjectIdMiddleware,
 } from '../../libs/rest/index.js';
 import { UserService } from './types/user-service.interface.js';
 import { fillDTO } from '../../helpers/common.js';
@@ -52,6 +55,20 @@ export class UserController extends BaseController {
       path: '/logout',
       method: HttpMethod.Post,
       handler: this.logout,
+    });
+
+    this.addRoute({
+      path: '/:userId/avatar',
+      method: HttpMethod.Post,
+      handler: this.uploadAvatar,
+      middlewares: [
+        new ValidateObjectIdMiddleware('userId'),
+        new DocumentExistsMiddleware(this.userService, 'User', 'userId'),
+        new UploadFileMiddleware(
+          this.configService.get('UPLOAD_DIRECTORY'),
+          'avatar'
+        ),
+      ],
     });
   }
 
@@ -118,5 +135,11 @@ export class UserController extends BaseController {
 
   public async logout(_req: Request, res: Response): Promise<void> {
     this.noContent(res, {});
+  }
+
+  public async uploadAvatar(req: Request, res: Response) {
+    this.created(res, {
+      filepath: req.file?.path,
+    });
   }
 }

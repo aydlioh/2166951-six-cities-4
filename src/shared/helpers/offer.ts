@@ -23,7 +23,6 @@ export const parseOffer = (offerData: string): Offer => {
   const [
     title,
     description,
-    postDate,
     city,
     previewPath,
     imagePaths,
@@ -58,7 +57,6 @@ export const parseOffer = (offerData: string): Offer => {
   return {
     title,
     description,
-    postDate: new Date(postDate),
     city: isCity(city) ? city : City.Paris,
     previewPath,
     imagePaths: imagePaths.split(';'),

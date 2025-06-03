@@ -1,4 +1,3 @@
-import dayjs from 'dayjs';
 import {
   generateRandomValue,
   getRandomItem,
@@ -22,16 +21,8 @@ const GUEST_RANGE = {
   MIN: 1,
 };
 
-const FIRST_WEEK_DAY = 1;
-const LAST_WEEK_DAY = 7;
-
 export class TSVOfferGenerator implements OfferGenerator {
   constructor(private readonly mockServerData: MockServerData) {}
-
-  private getRandomDate = () =>
-    dayjs()
-      .subtract(generateRandomValue(FIRST_WEEK_DAY, LAST_WEEK_DAY), 'day')
-      .toISOString();
 
   private getRandomBoolean = () =>
     Boolean(generateRandomValue(0, 1)).toString();
@@ -39,7 +30,6 @@ export class TSVOfferGenerator implements OfferGenerator {
   public generate(): string {
     const title = getRandomItem(this.mockServerData.titles);
     const description = getRandomItem(this.mockServerData.descriptions);
-    const postDate = this.getRandomDate();
     const city = getRandomItem(this.mockServerData.cities);
     const previewPath = getRandomItem(this.mockServerData.offerImages);
     const imagePaths = getRandomItems(this.mockServerData.offerImages);
@@ -64,7 +54,6 @@ export class TSVOfferGenerator implements OfferGenerator {
     return [
       title,
       description,
-      postDate,
       city,
       previewPath,
       imagePaths.join(';'),
