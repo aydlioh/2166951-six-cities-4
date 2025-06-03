@@ -34,7 +34,6 @@ export type Coordinates = {
 export type Offer = {
   title: string;
   description: string;
-  postDate: Date;
   city: City;
   previewPath: string;
   imagePaths: string[];
@@ -46,7 +45,7 @@ export type Offer = {
   guests: number;
   price: number;
   amenities: Amenity[];
-  owner: User; // UserId
+  owner: User;
   commentsCount: number;
   coordinates: Coordinates;
 };
