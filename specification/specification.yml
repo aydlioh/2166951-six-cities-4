@@ -531,7 +531,7 @@ components:
               ]
             example: [Breakfast, Washer]
 
-        owner:
+        userId:
           type: string
           example: 6329c3d6a04ab1061c6425ea
 
@@ -631,7 +631,7 @@ components:
               ]
             example: [Breakfast, Washer]
 
-        owner:
+        userId:
           type: string
           example: 6329c3d6a04ab1061c6425ea
 
