@@ -138,6 +138,16 @@ export class UserController extends BaseController {
   }
 
   public async uploadAvatar(req: Request, res: Response) {
+    if (!req.file?.path) {
+      throw new HttpError(
+        StatusCodes.BAD_REQUEST,
+        'Avatar is missing',
+        'UserController'
+      );
+    }
+
+    this.userService.updateAvatar(req.params.userId, req.file?.path);
+
     this.created(res, {
       filepath: req.file?.path,
     });

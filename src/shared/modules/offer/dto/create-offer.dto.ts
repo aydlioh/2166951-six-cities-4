@@ -10,7 +10,7 @@ import {
   IsInt,
   Max,
   IsMongoId,
-  Length,
+  ArrayMaxSize,
 } from 'class-validator';
 import {
   Amenity,
@@ -45,7 +45,8 @@ export class CreateOfferDto {
   public previewPath: string;
 
   @IsArray({ message: CreateOfferMessage.imagePaths.invalidFormat })
-  @Length(6, 6, { message: CreateOfferMessage.imagePaths.count })
+  @ArrayMinSize(6, { message: CreateOfferMessage.imagePaths.count })
+  @ArrayMaxSize(6, { message: CreateOfferMessage.imagePaths.count })
   @IsNotEmpty({ each: true })
   public imagePaths: string[];
 

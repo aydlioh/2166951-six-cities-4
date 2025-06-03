@@ -13,9 +13,9 @@ export class CreateUserDto implements User {
   public name: string;
 
   @IsOptional()
-  @IsString({ message: CreateUserMessage.avatarUrl.invalidFormat })
+  @IsString({ message: CreateUserMessage.avatarPath.invalidFormat })
   @Matches(/\.(jpg|png)$/i, {
-    message: CreateUserMessage.avatarUrl.invalidExtension,
+    message: CreateUserMessage.avatarPath.invalidExtension,
   })
   public avatarPath: string;
 

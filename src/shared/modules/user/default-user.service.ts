@@ -54,4 +54,11 @@ export class DefaultUserService implements UserService {
   public async exists(documentId: string): Promise<boolean> {
     return (await this.userModel.exists({ _id: documentId })) !== null;
   }
+
+  public async updateAvatar(
+    userId: string,
+    avatarPath: string
+  ): Promise<void> {
+    await this.userModel.findByIdAndUpdate(userId, { avatarPath }).exec();
+  }
 }

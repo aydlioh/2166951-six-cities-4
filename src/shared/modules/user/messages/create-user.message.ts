@@ -3,7 +3,7 @@ export const CreateUserMessage = {
     invalidFormat:
       'Поле email должно содержать корректный адрес электронной почты.',
   },
-  avatarUrl: {
+  avatarPath: {
     invalidFormat: 'Ссылка на аватар должна быть строкой.',
     invalidExtension:
       'Аватар должен быть изображением в формате .jpg или .png.',
@@ -14,7 +14,7 @@ export const CreateUserMessage = {
   },
   type: {
     invalidType:
-      'Недопустимый тип пользователя. Допустимые значения: обычный, pro.',
+      'Недопустимый тип пользователя. Допустимые значения: base, pro.',
   },
   password: {
     invalidFormat: 'Пароль обязателен и должен быть строкой.',
