@@ -9,7 +9,6 @@ import {
   Min,
   IsInt,
   Max,
-  IsMongoId,
   ArrayMaxSize,
 } from 'class-validator';
 import {
@@ -87,7 +86,6 @@ export class CreateOfferDto {
   public amenities: Amenity[];
 
   @IsNotEmpty()
-  @IsMongoId({ message: CreateOfferMessage.userId.invalidId })
   public userId: string;
 
   @IsNotEmpty({

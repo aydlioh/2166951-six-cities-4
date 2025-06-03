@@ -10,7 +10,6 @@ import {
   Max,
   Min,
   ArrayMinSize,
-  IsMongoId,
   IsNotEmpty,
   ArrayMaxSize,
 } from 'class-validator';
@@ -84,7 +83,6 @@ export class UpdateOfferDto {
   public amenities?: Amenity[];
 
   @IsOptional()
-  @IsMongoId({ message: UpdateOfferMessage.userId.invalidId })
   public userId?: User;
 
   @IsOptional()

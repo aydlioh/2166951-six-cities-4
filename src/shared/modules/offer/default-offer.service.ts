@@ -130,7 +130,10 @@ export class DefaultOfferService implements OfferService {
     const favorites = await this.favoriteModel.find({ userId }).exec();
     const offerIds = favorites.map((favorite) => favorite.offerId);
 
-    return this.offerModel.find({ _id: { $in: offerIds } }).exec();
+    return this.offerModel
+      .find({ _id: { $in: offerIds } })
+      .populate('userId')
+      .exec();
   }
 
   public async addFavorite(
