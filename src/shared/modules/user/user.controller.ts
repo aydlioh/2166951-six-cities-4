@@ -20,13 +20,17 @@ import { UserRdo } from './rdo/user.rdo.js';
 import { CreateUserRequest } from './types/create-user-request.type.js';
 import { LoginUserRequest } from './types/login-user-request.type.js';
 import { CreateUserDto } from './dto/create-user.dto.js';
-import { LoginUserDto } from './dto/login.dto.js';
+import { LoginDto } from './dto/login.dto.js';
+import { AuthService } from '../auth/types/auth-service.interface.js';
+import { LoggedUserRdo } from '../offer/rdo/logged-user.rdo.js';
 
 export class UserController extends BaseController {
   constructor(
     @inject(Component.Logger) protected readonly logger: Logger,
     @inject(Component.UserService) private readonly userService: UserService,
-    @inject(Component.Config) private readonly configService: Config<RestSchema>
+    @inject(Component.Config)
+    private readonly configService: Config<RestSchema>,
+    @inject(Component.AuthService) private readonly authService: AuthService
   ) {
     super(logger);
     this.logger.info('Register routes for UserController...');
@@ -34,7 +38,7 @@ export class UserController extends BaseController {
     this.addRoute({
       path: '/register',
       method: HttpMethod.Post,
-      handler: this.create,
+      handler: this.register,
       middlewares: [new ValidateDtoMiddleware(CreateUserDto)],
     });
 
@@ -42,11 +46,11 @@ export class UserController extends BaseController {
       path: '/login',
       method: HttpMethod.Post,
       handler: this.login,
-      middlewares: [new ValidateDtoMiddleware(LoginUserDto)],
+      middlewares: [new ValidateDtoMiddleware(LoginDto)],
     });
 
     this.addRoute({
-      path: '/check-auth',
+      path: '/login',
       method: HttpMethod.Get,
       handler: this.checkAuth,
     });
@@ -72,7 +76,7 @@ export class UserController extends BaseController {
     });
   }
 
-  public async create(
+  public async register(
     { body }: CreateUserRequest,
     res: Response
   ): Promise<void> {
@@ -94,43 +98,28 @@ export class UserController extends BaseController {
     this.created(res, fillDTO(UserRdo, result));
   }
 
-  public async login(
-    { body }: LoginUserRequest,
-    _res: Response
-  ): Promise<void> {
-    const existsUser = await this.userService.findByEmail(body.email);
-
-    if (!existsUser) {
-      throw new HttpError(
-        StatusCodes.UNAUTHORIZED,
-        `User with email ${body.email} not found.`,
-        'UserController'
-      );
-    }
-
-    throw new HttpError(
-      StatusCodes.NOT_IMPLEMENTED,
-      'Not implemented',
-      'UserController'
-    );
+  public async login({ body }: LoginUserRequest, res: Response): Promise<void> {
+    const user = await this.authService.verify(body);
+    const token = await this.authService.authenticate(user);
+    const responseData = fillDTO(LoggedUserRdo, {
+      email: user.email,
+      token,
+    });
+    this.ok(res, responseData);
   }
 
-  public async checkAuth(req: Request, _res: Response): Promise<void> {
-    const authHeader = req.headers.authorization;
+  public async checkAuth({ tokenPayload: { email } }: Request, res: Response) {
+    const foundedUser = await this.userService.findByEmail(email);
 
-    if (!authHeader) {
+    if (!foundedUser) {
       throw new HttpError(
         StatusCodes.UNAUTHORIZED,
-        'Authorization header is missing',
+        'Unauthorized',
         'UserController'
       );
     }
 
-    throw new HttpError(
-      StatusCodes.NOT_IMPLEMENTED,
-      'Not implemented',
-      'UserController'
-    );
+    this.ok(res, fillDTO(LoggedUserRdo, foundedUser));
   }
 
   public async logout(_req: Request, res: Response): Promise<void> {
@@ -138,6 +127,16 @@ export class UserController extends BaseController {
   }
 
   public async uploadAvatar(req: Request, res: Response) {
+    if (!req.file?.path) {
+      throw new HttpError(
+        StatusCodes.BAD_REQUEST,
+        'Avatar is missing',
+        'UserController'
+      );
+    }
+
+    this.userService.updateAvatar(req.params.userId, req.file?.path);
+
     this.created(res, {
       filepath: req.file?.path,
     });

@@ -5,14 +5,13 @@ import {
   IsEnum,
   IsString,
   IsArray,
-  Length,
   IsBoolean,
   IsInt,
   Max,
   Min,
   ArrayMinSize,
-  IsMongoId,
   IsNotEmpty,
+  ArrayMaxSize,
 } from 'class-validator';
 import {
   Amenity,
@@ -44,7 +43,8 @@ export class UpdateOfferDto {
 
   @IsOptional()
   @IsArray({ message: UpdateOfferMessage.imagePaths.invalidFormat })
-  @Length(6, 6, { message: UpdateOfferMessage.imagePaths.count })
+  @ArrayMinSize(6, { message: UpdateOfferMessage.imagePaths.count })
+  @ArrayMaxSize(6, { message: UpdateOfferMessage.imagePaths.count })
   public imagePaths?: string[];
 
   @IsOptional()
@@ -83,7 +83,6 @@ export class UpdateOfferDto {
   public amenities?: Amenity[];
 
   @IsOptional()
-  @IsMongoId({ message: UpdateOfferMessage.userId.invalidId })
   public userId?: User;
 
   @IsOptional()

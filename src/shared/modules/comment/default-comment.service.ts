@@ -4,10 +4,7 @@ import { CommentService } from './types/comment-service.interface.js';
 import { Component } from '../../di/component.js';
 import { CommentEntity } from './entities/comment.entity.js';
 import { CreateCommentDto } from './dto/create-comment.dto.js';
-import {
-  DEFAULT_COMMENTS_COUNT,
-  DEFAULT_SORT_TYPE,
-} from './comment.constants.js';
+import { DEFAULT_SORT_TYPE } from './comment.constants.js';
 
 @injectable()
 export class DefaultCommentService implements CommentService {
@@ -24,12 +21,10 @@ export class DefaultCommentService implements CommentService {
   }
 
   public async findByOfferId(
-    offerId: string,
-    count?: number
+    offerId: string
   ): Promise<DocumentType<CommentEntity>[]> {
     return this.commentModel
       .find({ offerId })
-      .limit(count ?? DEFAULT_COMMENTS_COUNT)
       .sort({ createdAt: DEFAULT_SORT_TYPE })
       .populate('userId');
   }

@@ -11,4 +11,5 @@ export interface UserService extends DocumentExists {
     dto: CreateUserDto,
     salt: string
   ): Promise<DocumentType<UserEntity>>;
+  updateAvatar(userId: string, avatarPath: string): Promise<void>;
 }

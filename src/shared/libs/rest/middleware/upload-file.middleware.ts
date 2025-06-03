@@ -1,4 +1,4 @@
-import * as crypto from 'node:crypto';
+import crypto from 'node:crypto';
 import { NextFunction, Request, Response } from 'express';
 import multer, { diskStorage } from 'multer';
 import { extension } from 'mime-types';

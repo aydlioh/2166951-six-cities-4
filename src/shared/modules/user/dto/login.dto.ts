@@ -1,7 +1,7 @@
 import { IsNotEmpty, IsEmail, IsString } from 'class-validator';
 import { LoginMessage } from '../messages/login.message.js';
 
-export class LoginUserDto {
+export class LoginDto {
   @IsNotEmpty({ message: LoginMessage.email.invalidFormat })
   @IsEmail({}, { message: LoginMessage.email.invalidFormat })
   public email: string;

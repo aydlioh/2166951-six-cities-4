@@ -24,9 +24,6 @@ export class OfferEntity {
   @prop({ type: String, required: true, enum: City })
   public city: City;
 
-  @prop({ type: Date, required: true })
-  public postDate: Date;
-
   @prop({ type: String, required: true })
   public previewPath: string;
 

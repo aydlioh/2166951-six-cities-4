@@ -20,7 +20,7 @@ export class UserEntity implements User {
   @prop({ type: String, required: false, default: '' })
   public name: string;
 
-  @prop({ type: String, required: true, default: '' })
+  @prop({ type: String, required: false, default: '' })
   public avatarPath: string;
 
   @prop({ type: String, required: true, default: '' })
@@ -42,6 +42,11 @@ export class UserEntity implements User {
 
   public getPassword() {
     return this.password;
+  }
+
+  public verifyPassword(password: string, salt: string) {
+    const hashPassword = createSHA256(password, salt);
+    return hashPassword === this.password;
   }
 }
 
