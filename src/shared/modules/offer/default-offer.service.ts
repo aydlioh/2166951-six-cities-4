@@ -43,7 +43,7 @@ export class DefaultOfferService implements OfferService {
       .find()
       .limit(count ?? DEFAULT_OFFER_COUNT)
       .sort({ createdAt: DEFAULT_SORT_TYPE })
-      .populate('owner')
+      .populate('userId')
       .exec();
 
     return this.getWithFavorites(offers, userId);
@@ -55,7 +55,7 @@ export class DefaultOfferService implements OfferService {
   ): Promise<types.DocumentType<OfferEntity> | null> {
     const offer = await this.offerModel
       .findById(offerId)
-      .populate('owner')
+      .populate('userId')
       .exec();
 
     if (!offer) {

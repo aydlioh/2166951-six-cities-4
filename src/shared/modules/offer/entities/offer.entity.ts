@@ -39,7 +39,7 @@ export class OfferEntity {
   @prop({ type: Boolean })
   public isFavorite?: boolean;
 
-  @prop({ type: Number, required: true })
+  @prop({ type: Number, required: true, default: 0 })
   public rating: number;
 
   @prop({ type: String, required: true, enum: HousingType })
@@ -58,7 +58,7 @@ export class OfferEntity {
   public amenities: Amenity[];
 
   @prop({ ref: () => UserEntity, required: true })
-  public owner: Ref<UserEntity>;
+  public userId: Ref<UserEntity>;
 
   @prop({ type: Number, required: true, default: 0 })
   public commentsCount: number;

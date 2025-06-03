@@ -7,6 +7,8 @@ import {
   DefaultCommentService,
   CommentService,
 } from './index.js';
+import { CommentController } from './comment.controller.js';
+import { Controller } from '../../libs/rest/index.js';
 
 export const createCommentModule = () =>
   new ContainerModule((commentModule) => {
@@ -17,4 +19,8 @@ export const createCommentModule = () =>
     commentModule
       .bind<types.ModelType<CommentEntity>>(Component.CommentModel)
       .toConstantValue(CommentModel);
+    commentModule
+      .bind<Controller>(Component.CommentController)
+      .to(CommentController)
+      .inSingletonScope();
   });

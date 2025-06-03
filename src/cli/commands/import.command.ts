@@ -105,6 +105,6 @@ export class ImportCommand implements ICommand {
       this.salt
     );
 
-    await this.offerService.create({ ...offer, owner: owner.id });
+    await this.offerService.create({ ...offer, userId: owner.id });
   }
 }
